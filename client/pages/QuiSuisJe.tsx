@@ -177,7 +177,7 @@ export default function QuiSuisJe() {
               </p>
               <p className="text-foreground leading-relaxed mt-4">
                 Pour l'instant, j'envisage, après ma formation{" "}
-                <Badge variant="secondary">bac +3</Badge>, de travailler dans le
+                <strong>bac +3</strong>, de travailler dans le
                 <strong> secteur privé</strong> ou d'intégrer la{" "}
                 <strong>fonction publique</strong> en passant des concours
                 spécifiques.
