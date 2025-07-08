@@ -1,5 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+<<<<<<< HEAD
 import { Badge } from "@/components/ui/badge";
+=======
+>>>>>>> 41e0d0db73e5dcf79abf19ccdcc3c7632c2c6d69
 import { User, Heart, Target, Music } from "lucide-react";
 
 export default function QuiSuisJe() {
@@ -72,6 +75,7 @@ export default function QuiSuisJe() {
 
               <p className="text-foreground leading-relaxed">
                 J'ai donc obtenu mon{" "}
+<<<<<<< HEAD
                 <Badge variant="secondary">
                   baccalauréat technologique option SIG
                 </Badge>{" "}
@@ -79,6 +83,12 @@ export default function QuiSuisJe() {
                 l'impact du numérique dans le monde professionnel, ce qui m'a
                 poussé à postuler pour le
                 <Badge variant="secondary">BTS SIO</Badge> (Services
+=======
+                <strong>baccalauréat technologique option SIG</strong> au lycée
+                Dick Ukeiwë en 2021. Cette terminale m'a montré l'impact du
+                numérique dans le monde professionnel, ce qui m'a poussé à
+                postuler pour le <strong>BTS SIO</strong> (Services
+>>>>>>> 41e0d0db73e5dcf79abf19ccdcc3c7632c2c6d69
                 Informatiques aux Organisations). Je suis plus que satisfait de
                 ce BTS, car j'y ai acquis de nombreuses compétences.
               </p>
