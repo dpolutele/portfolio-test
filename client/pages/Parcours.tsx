@@ -56,7 +56,8 @@ export default function Parcours() {
                   },
                   {
                     year: "2021",
-                    title: "Baccalauréat Technologique (STMG option SIG)",
+                    title:
+                      "Baccalauréat Technologique (STMG option SIG)",
                     status: "Obtenu",
                     mention: "Mention AB",
                   },
@@ -82,7 +83,6 @@ export default function Parcours() {
                             href="https://btsinfo.nc/"
                             target="_blank"
                             rel="noopener noreferrer"
-                            title="Site officiel du BTS SIO"
                             className="hover:underline"
                           >
                             {diploma.title}
@@ -161,7 +161,8 @@ export default function Parcours() {
                     year: "2022",
                     type: "Stage",
                     title: "Technicien informatique N1-N2",
-                    company: "Direction du numérique et de la modernisation de la Nouvelle-Calédonie",
+                    company:
+                      "Direction du numérique et de la modernisation de la Nouvelle-Calédonie",
                     description:
                       "Interventions sur site pour dépannage, remplacement, et déploiement de postes et matériels informatiques. Utilisation d’outils de gestion de parc et ticketing (Jira, EazyVista).",
                   },
@@ -194,7 +195,7 @@ export default function Parcours() {
           </Card>
         </section>
 
-        {/* Autres certifications */}
+        {/* Certifications et documents */}
         <section className="animate-fade-in-up">
           <Card>
             <CardHeader>
@@ -206,39 +207,35 @@ export default function Parcours() {
                 Téléchargez mes certifications et documents professionnels
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="space-y-6">
+              {/* CV intégré */}
+              <div className="space-y-2">
+                <h3 className="font-semibold text-foreground">Mon CV</h3>
+                <iframe
+                  src={`${import.meta.env.BASE_URL}curriculum-vitae-2025.pdf`}
+                  className="w-full h-[800px] border rounded-lg"
+                ></iframe>
+                <div>
+                  <Button variant="default" asChild>
+                    <a
+                      href={`${import.meta.env.BASE_URL}curriculum-vitae-2025.pdf`}
+                      download="curriculum-vitae-2025.pdf"
+                    >
+                      <Download className="mr-2 h-4 w-4" />
+                      Télécharger le CV
+                    </a>
+                  </Button>
+                </div>
+              </div>
+
+              {/* Autres documents */}
               <div className="grid gap-3 md:grid-cols-2">
                 {[
-                  {
-                    name: "Mon CV",
-                    file: "curriculum-vitae-2025.pdf",
-                    downloadable: true,
-                  },
-                  {
-                    name: "CNIL RGPD MOD1",
-                    file: "CNILRGPD-MOD1.pdf",
-                    downloadable: false,
-                  },
-                  {
-                    name: "CNIL RGPD MOD2",
-                    file: "CNILRGPD-MOD2.pdf",
-                    downloadable: false,
-                  },
-                  {
-                    name: "CNIL RGPD MOD3",
-                    file: "CNILRGPD-MOD3.pdf",
-                    downloadable: false,
-                  },
-                  {
-                    name: "Certification PIX",
-                    file: "PIX.pdf",
-                    downloadable: false,
-                  },
-                  {
-                    name: "GetConnected",
-                    file: "GetConnected.pdf",
-                    downloadable: false,
-                  },
+                  { name: "CNIL RGPD MOD1", file: "CNILRGPD-MOD1.pdf" },
+                  { name: "CNIL RGPD MOD2", file: "CNILRGPD-MOD2.pdf" },
+                  { name: "CNIL RGPD MOD3", file: "CNILRGPD-MOD3.pdf" },
+                  { name: "Certification PIX", file: "PIX.pdf" },
+                  { name: "GetConnected", file: "GetConnected.pdf" },
                 ].map((doc, index) => (
                   <Button
                     key={index}
@@ -248,16 +245,11 @@ export default function Parcours() {
                   >
                     <a
                       href={`${import.meta.env.BASE_URL}${doc.file}`}
-                      {...(doc.downloadable
-                        ? { download: doc.file }
-                        : { target: "_blank", rel: "noopener noreferrer" })}
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       <div className="flex items-center gap-3 w-full">
-                        {doc.downloadable ? (
-                          <Download className="h-4 w-4 text-primary" />
-                        ) : (
-                          <ExternalLink className="h-4 w-4 text-primary" />
-                        )}
+                        <ExternalLink className="h-4 w-4 text-primary" />
                         <span className="flex-1 text-left">{doc.name}</span>
                       </div>
                     </a>
