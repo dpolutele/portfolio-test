@@ -28,7 +28,7 @@ export default function Home() {
           <div className="mt-8 flex justify-center">
             <div className="w-48 h-48 rounded-full bg-gradient-to-br from-primary to-accent overflow-hidden border-4 border-background shadow-xl">
               <img
-                src="/profile.jpg"
+                src={`${import.meta.env.BASE_URL}profile.jpg`}
                 alt="Photo de profil Dylan POLUTELE"
                 className="w-full h-full object-cover"
                 onError={(e) => {

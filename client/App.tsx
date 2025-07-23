@@ -22,7 +22,8 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+      {/* Note le basename ici */}
+      <BrowserRouter basename="/portfolio">
         <Layout>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -31,7 +32,7 @@ const App = () => (
             <Route path="/projets" element={<Projets />} />
             <Route path="/qui-suis-je" element={<QuiSuisJe />} />
             <Route path="/contact" element={<Contact />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            {/* Toutes les autres routes */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>

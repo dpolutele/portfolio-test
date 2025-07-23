@@ -76,14 +76,25 @@ export default function Parcours() {
                     </Badge>
                     <div className="flex-1">
                       <h3 className="font-semibold text-foreground">
-                        {diploma.title}
+                        {diploma.title ===
+                        "Brevet de technicien supérieur (BTS SIO - SISR)" ? (
+                          <a
+                            href="https://btsinfo.nc/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            title="Site officiel du BTS SIO"
+                            className="hover:underline"
+                          >
+                            {diploma.title}
+                          </a>
+                        ) : (
+                          diploma.title
+                        )}
                       </h3>
                       <div className="flex items-center gap-2 mt-1">
                         <Badge
                           variant={
-                            diploma.status === "En cours"
-                              ? "default"
-                              : "outline"
+                            diploma.status === "En cours" ? "default" : "outline"
                           }
                         >
                           {diploma.status}
@@ -131,17 +142,28 @@ export default function Parcours() {
               <div className="space-y-4">
                 {[
                   {
+                    year: "2025",
+                    type: "Stage",
+                    title: "Technicien informatique N1-N2",
+                    company: "Lycée Polyvalent Jules Garnier",
+                    description:
+                      "Administration, supervision et maintenance du parc informatique de l'établissement, déploiements d'images, scripting (serveur FOG), réaffectation de port sur VLAN (Cisco Catalyst), ticketing (GLPI).",
+                  },
+                  {
                     year: "2023",
                     type: "Stage",
-                    title: "Ingénieur informatique",
-                    company:
-                      "Centre Hospitalier Territorial Gaston-Bourret Médipole",
+                    title: "Ingénieur informatique N2-N3",
+                    company: "Centre Hospitalier Territorial Gaston-Bourret",
+                    description:
+                      "Migration de serveurs, gestion de postes clients lourds/légers, résolution de pannes réseaux, mise à jour de switches (Alcatel-Lucent), déploiement de logiciels applicatifs.",
                   },
                   {
                     year: "2022",
                     type: "Stage",
-                    title: "Technicien de maintenance informatique",
-                    company: "Direction du numérique et de la modernisation",
+                    title: "Technicien informatique N1-N2",
+                    company: "Direction du numérique et de la modernisation de la Nouvelle-Calédonie",
+                    description:
+                      "Interventions sur site pour dépannage, remplacement, et déploiement de postes et matériels informatiques. Utilisation d’outils de gestion de parc et ticketing (Jira, EazyVista).",
                   },
                 ].map((experience, index) => (
                   <div
@@ -160,6 +182,9 @@ export default function Parcours() {
                       </div>
                       <p className="text-muted-foreground text-sm">
                         {experience.company}
+                      </p>
+                      <p className="text-sm text-foreground mt-1">
+                        {experience.description}
                       </p>
                     </div>
                   </div>
@@ -186,22 +211,22 @@ export default function Parcours() {
                 {[
                   {
                     name: "Mon CV",
-                    file: "curriculum vitae 2025.pdf",
+                    file: "curriculum-vitae-2025.pdf",
                     downloadable: true,
                   },
                   {
                     name: "CNIL RGPD MOD1",
-                    file: "CNILRGPD(MOD1).pdf",
+                    file: "CNILRGPD-MOD1.pdf",
                     downloadable: false,
                   },
                   {
                     name: "CNIL RGPD MOD2",
-                    file: "CNILRGPD(MOD2).pdf",
+                    file: "CNILRGPD-MOD2.pdf",
                     downloadable: false,
                   },
                   {
                     name: "CNIL RGPD MOD3",
-                    file: "CNILRGPD(MOD3).pdf",
+                    file: "CNILRGPD-MOD3.pdf",
                     downloadable: false,
                   },
                   {
@@ -222,7 +247,7 @@ export default function Parcours() {
                     asChild
                   >
                     <a
-                      href={`/${doc.file}`}
+                      href={`${import.meta.env.BASE_URL}${doc.file}`}
                       {...(doc.downloadable
                         ? { download: doc.file }
                         : { target: "_blank", rel: "noopener noreferrer" })}
@@ -241,22 +266,6 @@ export default function Parcours() {
               </div>
             </CardContent>
           </Card>
-        </section>
-
-        {/* Professional Image */}
-        <section className="flex justify-center animate-fade-in-up">
-          <div className="w-32 h-32 rounded-lg bg-gradient-to-br from-primary to-accent overflow-hidden border-2 border-background shadow-lg">
-            <img
-              src="/monparcourspro.jpg"
-              alt="Icône professionnelle"
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                e.currentTarget.style.display = "none";
-                e.currentTarget.parentElement!.innerHTML =
-                  '<div class="w-full h-full flex items-center justify-center text-white text-2xl font-bold"><Briefcase /></div>';
-              }}
-            />
-          </div>
         </section>
       </div>
     </div>

@@ -2,10 +2,7 @@
   "name": "fusion-starter",
   "private": true,
   "type": "module",
-<<<<<<< HEAD
-  "homepage": "https://dpolutele.github.io/portfolio-test",
-=======
->>>>>>> 41e0d0db73e5dcf79abf19ccdcc3c7632c2c6d69
+  "homepage": "https://dpolutele.github.io/portfolio",
   "pkg": {
     "assets": [
       "dist/spa/*"
@@ -16,13 +13,9 @@
   },
   "scripts": {
     "dev": "vite",
-<<<<<<< HEAD
     "build": "vite build",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
-=======
-    "build": "npm run build:client && npm run build:server",
->>>>>>> 41e0d0db73e5dcf79abf19ccdcc3c7632c2c6d69
+    "deploy": "gh-pages -d dist/spa",
     "build:client": "vite build",
     "build:server": "vite build --config vite.config.server.ts",
     "start": "node dist/server/node-build.mjs",
@@ -83,10 +76,7 @@
     "date-fns": "^3.6.0",
     "embla-carousel-react": "^8.3.0",
     "framer-motion": "^12.6.2",
-<<<<<<< HEAD
     "gh-pages": "^6.3.0",
-=======
->>>>>>> 41e0d0db73e5dcf79abf19ccdcc3c7632c2c6d69
     "globals": "^15.9.0",
     "input-otp": "^1.2.4",
     "lucide-react": "^0.462.0",
