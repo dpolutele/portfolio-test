@@ -1,8 +1,17 @@
 import type { Config } from "tailwindcss";
 
-export default {
+const additionalThemes = {
+  // Plus de thèmes ici si besoin, sinon vide
+};
+
+const config: Config = {
   darkMode: ["class"],
   content: ["./client/**/*.{ts,tsx}"],
+
+  safelist: [
+    "dark",
+  ],
+
   prefix: "",
   theme: {
     container: {
@@ -69,40 +78,20 @@ export default {
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
         },
         "fade-in": {
-          from: {
-            opacity: "0",
-            transform: "translateY(20px)",
-          },
-          to: {
-            opacity: "1",
-            transform: "translateY(0)",
-          },
+          from: { opacity: "0", transform: "translateY(20px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
         },
         "fade-in-up": {
-          from: {
-            opacity: "0",
-            transform: "translateY(40px)",
-          },
-          to: {
-            opacity: "1",
-            transform: "translateY(0)",
-          },
+          from: { opacity: "0", transform: "translateY(40px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
         },
       },
       animation: {
@@ -113,5 +102,11 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
-} satisfies Config;
+  plugins: [
+    require("tailwindcss-animate"),
+    require("@tailwindcss/typography"),
+    ({ addUtilities }: any) => addUtilities(additionalThemes),
+  ],
+};
+
+export default config;

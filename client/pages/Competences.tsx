@@ -9,25 +9,22 @@ const skillsData = {
     icon: Server,
     color: "bg-blue-500",
     skills: [
-      { name: "Gestion d'utilisateur Active Directory", percentage: 80 },
-      {
-        name: "Configuration et gestion de routeur/commutateur",
-        percentage: 60,
-      },
-      {
-        name: "Supervision du matériel et gestion de la sécurité",
-        percentage: 50,
-      },
+      { name: "Active Directory (AD DS, GPO, Domaines)", percentage: 80 },
+      { name: "Cisco Catalyst (VLAN, Trunks, EtherChannel, Spanning Tree)", percentage: 75 },
+      { name: "Windows Server (DHCP, DNS, Virtualisation)", percentage: 70 },
+      { name: "Supervision réseau (Zabbix, Centreon, GLPI)", percentage: 60 },
+      { name: "Sécurité réseau (pfSense, Fortigate, Firewall)", percentage: 50 },
     ],
   },
   Programmation: {
     icon: Code,
     color: "bg-green-500",
     skills: [
-      { name: "HTML & CSS", percentage: 60 },
-      { name: "SQL", percentage: 50 },
-      { name: "C", percentage: 40 },
-      { name: "Python, Java", percentage: 30 },
+      { name: "HTML, CSS, JavaScript", percentage: 70 },
+      { name: "SQL (MySQL, MariaDB, PostgreSQL)", percentage: 65 },
+      { name: "PowerShell/Bash", percentage: 60 },
+      { name: "Python", percentage: 50 },
+      { name: "Java & Programmation orientée objet", percentage: 45 },
     ],
   },
 };
@@ -153,12 +150,12 @@ export default function Competences() {
                 {[
                   "Windows Server",
                   "Active Directory",
-                  "VMware",
+                  "VMware/Virtual Box",
                   "Cisco",
-                  "MySQL",
+                  "Packet Tracer",
+                  "Wireshark",
                   "Linux",
                   "PowerShell",
-                  "Docker",
                   "Git",
                 ].map((tech) => (
                   <Badge

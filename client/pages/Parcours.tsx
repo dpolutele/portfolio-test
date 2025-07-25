@@ -56,8 +56,7 @@ export default function Parcours() {
                   },
                   {
                     year: "2021",
-                    title:
-                      "Baccalauréat Technologique (STMG option SIG)",
+                    title: "Baccalauréat Technologique (STMG option SIG)",
                     status: "Obtenu",
                     mention: "Mention AB",
                   },
@@ -70,7 +69,7 @@ export default function Parcours() {
                 ].map((diploma, index) => (
                   <div
                     key={index}
-                    className="flex items-start gap-4 p-4 rounded-lg bg-accent/20 border"
+                    className="flex items-start gap-4 p-4 rounded-lg border border-muted bg-accent/5"
                   >
                     <Badge variant="secondary" className="shrink-0">
                       {diploma.year}
@@ -121,7 +120,7 @@ export default function Parcours() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="flex items-center gap-4 p-4 rounded-lg bg-accent/20 border">
+              <div className="flex items-center gap-4 p-4 rounded-lg border border-muted bg-accent/5">
                 <Badge variant="secondary">2024</Badge>
                 <span className="font-semibold">Permis B</span>
               </div>
@@ -169,7 +168,7 @@ export default function Parcours() {
                 ].map((experience, index) => (
                   <div
                     key={index}
-                    className="flex items-start gap-4 p-4 rounded-lg bg-accent/20 border"
+                    className="flex items-start gap-4 p-4 rounded-lg border border-muted bg-accent/5"
                   >
                     <Badge variant="secondary" className="shrink-0">
                       {experience.year}

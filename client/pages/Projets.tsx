@@ -12,6 +12,60 @@ import { ExternalLink, Calendar, Users, Trophy } from "lucide-react";
 
 const projects = [
   {
+    title: "Projet final BTS SIO SISR - Épreuve E5",
+    date: "Juin-Octobre 2023",
+    location: "Lycée Dick Ukeiwe",
+    description: (
+      <>
+        <p>
+          Dans le cadre de l’épreuve finale E5 du BTS SIO spécialité SISR, j’ai conçu et déployé une infrastructure réseau complète pour une entreprise fictive "DEVLINE".
+        </p>
+
+        <p><strong>Mission 1 : Mise en place du LAN</strong></p>
+        <ul className="list-disc list-inside mb-4">
+          <li>Schéma réseau LAN</li>
+          <li>Installation d’un Active Directory (VBox)</li>
+          <li>Configuration AD DS, DHCP (plage IP définie), DNS</li>
+          <li>Création et déploiement des postes clients sur le domaine DEVLINE</li>
+          <li>Gestion des groupes, comptes utilisateurs et GPO (stratégies de sécurité, redirections)</li>
+          <li>Installation serveur Zabbix avec déploiement agents clients</li>
+          <li>Installation serveur GLPI pour gestion du parc</li>
+        </ul>
+
+        <p><strong>Mission 2 : Mise en place du WAN</strong></p>
+        <ul className="list-disc list-inside mb-4">
+          <li>Schéma réseau WAN</li>
+          <li>Installation et configuration du routeur/pare-feu pfSense</li>
+          <li>Mise en place de règles de filtrage et routage inter-VLAN</li>
+        </ul>
+
+        <p><strong>Mission 3 : Mise en place de la DMZ</strong></p>
+        <ul className="list-disc list-inside">
+          <li>Installation et configuration d’un serveur web</li>
+        </ul>
+
+        <p className="mt-4">
+          Travail sur Cisco 2960 :<br />
+          - Création VLAN, trunks, EtherChannel, Spanning Tree<br />
+          - Sécurisation des switches : interface management, SSH, affectation ports VLAN
+        </p>
+      </>
+    ),
+    type: "Projet final",
+    technologies: [
+      "Active Directory",
+      "Cisco 2960",
+      "pfSense",
+      "Zabbix",
+      "GLPI",
+      "Windows Server",
+      "Linux",
+      "Virtualisation",
+      "Sécurité réseau",
+    ],
+    image: "/projet_final_bts.jpg",
+  },
+  {
     title: "SIMULAND",
     date: "Juillet 2022",
     location: "Lycée Dick Ukeiwe",
@@ -26,6 +80,7 @@ const projects = [
     type: "Projet éducatif",
     technologies: ["Gestion de projet", "Travail en équipe", "Simulation"],
     url: "https://weblgn.ac-noumea.nc/IMG/pdf/jee-2022_1_.pdf",
+    image: "/simuland.jpg",
   },
   {
     title: "CTF pour les terminales SIG",
@@ -38,81 +93,67 @@ const projects = [
       "Le gagnant est reparti avec un commutateur Cisco 2960.",
     type: "Animation pédagogique",
     technologies: ["Cybersécurité", "CTF", "Formation", "Pédagogie"],
-  },
-  {
-    title: "Projet final BTS SIO SISR - Épreuve E5",
-    date: "Juin-Octobre 2023",
-    location: "Lycée Dick Ukeiwe",
-    description: `Dans le cadre de l’épreuve finale E5 du BTS SIO spécialité SISR, j’ai conçu et déployé une infrastructure réseau complète pour une entreprise fictive "DEVLINE".
-
-Mission 1 : Mise en place du LAN
-- Schéma réseau LAN
-- Installation d’un Active Directory (VBox)
-- Configuration AD DS, DHCP (plage IP définie), DNS
-- Création et déploiement des postes clients sur le domaine DEVLINE
-- Gestion des groupes, comptes utilisateurs et GPO (stratégies de sécurité, redirections, scripts)
-- Installation serveur Zabbix avec déploiement agents clients
-- Installation serveur GLPI pour gestion du parc
-
-Mission 2 : Mise en place du WAN
-- Schéma réseau WAN
-- Installation et configuration du routeur/pare-feu pfSense
-- Mise en place de règles de filtrage et routage inter-VLAN
-
-Mission 3 : Mise en place de la DMZ
-- Installation et configuration d’un serveur web
-
-Travail sur Cisco 2960 :
-- Création VLAN, trunks, EtherChannel, Spanning Tree
-- Sécurisation des switches : interface management, SSH, affectation ports VLAN
-`,
-    type: "Projet final",
-    technologies: [
-      "Active Directory",
-      "Cisco 2960",
-      "pfSense",
-      "Zabbix",
-      "GLPI",
-      "Windows Server",
-      "Linux",
-      "Virtualisation",
-      "Sécurité réseau",
-    ],
+    image: "/ctf_terminales_sig.jpg",
   },
 ];
 
 function ProjectCard({ project }) {
   const [showMore, setShowMore] = useState(false);
+  const limit = 350;
 
-  // Pour tronquer la description à environ 350 caractères
-  const shortDesc = project.description.slice(0, 350);
+  const shortDesc =
+    typeof project.description === "string"
+      ? project.description.slice(0, limit)
+      : null;
 
   return (
     <Card className="hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
       <CardHeader>
         <div className="flex items-start justify-between">
-          <div className="space-y-2">
-            <CardTitle className="text-xl">{project.title}</CardTitle>
-            <CardDescription className="flex items-center gap-4 text-sm">
-              <div className="flex items-center gap-1">
-                <Calendar className="h-4 w-4" />
-                {project.date}
-              </div>
-              <div className="flex items-center gap-1">
-                <Users className="h-4 w-4" />
-                {project.location}
-              </div>
-            </CardDescription>
+          <div className="flex items-center gap-4">
+            <img
+              src={`${import.meta.env.BASE_URL}${project.image.replace(/^\//, '')}`}
+              alt={`Image du projet ${project.title}`}
+              className="w-64 h-36 object-cover rounded-md"
+              loading="lazy"
+            />
+            <div className="space-y-2 max-w-xl">
+              <CardTitle className="text-xl">{project.title}</CardTitle>
+              <CardDescription className="flex items-center gap-4 text-sm">
+                <div className="flex items-center gap-1">
+                  <Calendar className="h-4 w-4" />
+                  {project.date}
+                </div>
+                <div className="flex items-center gap-1">
+                  <Users className="h-4 w-4" />
+                  {project.location}
+                </div>
+              </CardDescription>
+            </div>
           </div>
-          <Badge variant="secondary">{project.type}</Badge>
+          <Badge variant="secondary" className="self-start">
+            {project.type}
+          </Badge>
         </div>
       </CardHeader>
+
       <CardContent>
         <p className="text-muted-foreground mb-4 leading-relaxed whitespace-pre-line">
-          {showMore ? project.description : shortDesc + (project.description.length > 350 ? "..." : "")}
+          {typeof project.description === "string"
+            ? showMore
+              ? project.description
+              : shortDesc + (project.description.length > limit ? "..." : "")
+            : project.description}
         </p>
 
-        <div className="space-y-4">
+        {typeof project.description === "string" &&
+          project.description.length > limit && (
+            <Button variant="link" onClick={() => setShowMore(!showMore)}>
+              {showMore ? "Réduire" : "Afficher la suite"}
+            </Button>
+          )}
+
+        <div className="space-y-4 mt-6">
           <div>
             <h4 className="font-semibold text-sm text-foreground mb-2">
               Technologies utilisées
@@ -136,12 +177,6 @@ function ProjectCard({ project }) {
                 Voir le projet
                 <ExternalLink className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
               </a>
-            </Button>
-          )}
-
-          {!project.url && project.description.length > 350 && (
-            <Button variant="link" onClick={() => setShowMore(!showMore)}>
-              {showMore ? "Réduire" : "Afficher la suite"}
             </Button>
           )}
         </div>
