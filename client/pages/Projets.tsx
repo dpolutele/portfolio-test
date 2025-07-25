@@ -90,7 +90,7 @@ const projects = [
       "Dans le cadre de ma formation en BTS SIO, nous avons organisé une journée pour faire découvrir le BTS aux terminales SIG du Lycée Blaise Pascal et Dick Ukeiwe via un Capture The Flag. " +
       "Création complète du CTF, hébergement web, défis et gestion sur le site. " +
       "Organisation des équipes avec comptes, accueil, connexion et déroulement du jeu. " +
-      "Le gagnant est reparti avec un commutateur Cisco 2960.",
+      "Le gagnant est reparti avec un commutateur Cisco Catalyst 2960.",
     type: "Animation pédagogique",
     technologies: ["Cybersécurité", "CTF", "Formation", "Pédagogie"],
     image: "/ctf_terminales_sig.jpg",
