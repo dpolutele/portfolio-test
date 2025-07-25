@@ -70,7 +70,7 @@ function TypingEffect() {
             timeout = setTimeout(() => {
               setDisplayedText(dynamicPrefix.slice(0, charIndex));
               setCharIndex(charIndex + 1);
-            }, 150); // <-- ralentit ici (au lieu de 100)
+            }, 150); // ralentit ici (au lieu de 100)
           } else {
             setSubPhase("word");
             setCharIndex(0);
@@ -80,7 +80,7 @@ function TypingEffect() {
             timeout = setTimeout(() => {
               setDisplayedText(dynamicPrefix + currentDynamicWord.slice(0, charIndex));
               setCharIndex(charIndex + 1);
-            }, 150); // <-- ralentit ici aussi
+            }, 150); // ralentit ici aussi
           } else {
             timeout = setTimeout(() => setPhase("deleting"), 1200);
           }
@@ -91,13 +91,13 @@ function TypingEffect() {
           timeout = setTimeout(() => {
             setDisplayedText(fullWord.slice(0, charIndex - 1));
             setCharIndex(charIndex - 1);
-          }, 80); // <-- ralentit ici (au lieu de 50)
+          }, 80); // ralentit ici (au lieu de 50)
         } else if (wordIndex - fixedTexts.length === dynamicWords.length - 1) {
           // Supprimer "Futur " uniquement à la toute fin
           timeout = setTimeout(() => {
             setDisplayedText(dynamicPrefix.slice(0, charIndex - 1));
             setCharIndex(charIndex - 1);
-          }, 80); // <-- ralentit ici aussi
+          }, 80); // ralentit ici aussi
 
           if (charIndex === 1) {
             setTimeout(() => {
@@ -124,8 +124,7 @@ function TypingEffect() {
 
   return (
     <span
-      className="font-bold text-4xl md:text-6xl border-r-2 border-foreground animate-blink-caret"
-      style={{ whiteSpace: "nowrap" }}
+      className="font-bold text-4xl md:text-6xl border-r-2 border-foreground animate-blink-caret whitespace-normal md:whitespace-nowrap"
     >
       {displayedText}
     </span>
@@ -151,7 +150,7 @@ export default function Home() {
             <div className="w-48 h-48 rounded-full bg-gradient-to-br from-primary to-accent overflow-hidden border-4 border-background shadow-xl">
               <img
                 src={`${import.meta.env.BASE_URL}profile.jpg`}
-                srcSet={` ${import.meta.env.BASE_URL}profile.jpg 1x, ${import.meta.env.BASE_URL}profile.jpg 2x`}
+                srcSet={`${import.meta.env.BASE_URL}profile.jpg 1x, ${import.meta.env.BASE_URL}profile.jpg 2x`}
                 alt="Photo de profil Dylan POLUTELE"
                 className="w-full h-full object-cover"
                 onError={(e) => {

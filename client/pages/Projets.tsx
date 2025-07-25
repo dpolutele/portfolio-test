@@ -107,19 +107,19 @@ function ProjectCard({ project }) {
       : null;
 
   return (
-    <Card className="hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+    <Card className="hover:shadow-lg transition-all duration-300 hover:-translate-y-1 max-w-full sm:max-w-none">
       <CardHeader>
-        <div className="flex items-start justify-between">
-          <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row items-start justify-between gap-4">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 w-full sm:w-auto">
             <img
               src={`${import.meta.env.BASE_URL}${project.image.replace(/^\//, '')}`}
               alt={`Image du projet ${project.title}`}
-              className="w-64 h-36 object-cover rounded-md"
+              className="w-full max-w-xs h-auto object-cover rounded-md"
               loading="lazy"
             />
             <div className="space-y-2 max-w-xl">
               <CardTitle className="text-xl">{project.title}</CardTitle>
-              <CardDescription className="flex items-center gap-4 text-sm">
+              <CardDescription className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm">
                 <div className="flex items-center gap-1">
                   <Calendar className="h-4 w-4" />
                   {project.date}
@@ -131,7 +131,7 @@ function ProjectCard({ project }) {
               </CardDescription>
             </div>
           </div>
-          <Badge variant="secondary" className="self-start">
+          <Badge variant="secondary" className="self-start sm:self-auto">
             {project.type}
           </Badge>
         </div>

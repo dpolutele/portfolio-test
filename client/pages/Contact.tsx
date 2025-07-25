@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Mail, Phone, Linkedin, Send, ExternalLink } from "lucide-react";
 import { useState } from "react";
+import emailjs from "@emailjs/browser";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -18,18 +19,37 @@ export default function Contact() {
     email: "",
     message: "",
   });
+  const [sending, setSending] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // For now, just log the form data - you can integrate with a backend later
-    console.log("Form submitted:", formData);
-    // In a real app, you would send this to your backend
-    alert("Merci pour votre message ! Je vous répondrai bientôt.");
-    setFormData({ name: "", email: "", message: "" });
+    setSending(true);
+
+    // Remplace ces valeurs par les tiennes depuis EmailJS
+    const serviceID = "service_2bk5dh7";
+    const templateID = "template_x26490k";
+    const publicKey = "ByjmUjiJdTBWwelEz";
+
+    emailjs
+      .send(serviceID, templateID, formData, publicKey)
+      .then(
+        () => {
+          alert("Merci pour votre message ! Je vous répondrai bientôt.");
+          setFormData({ name: "", email: "", message: "" });
+          setSending(false);
+        },
+        (error) => {
+          alert(
+            "Une erreur est survenue lors de l'envoi du message. Veuillez réessayer plus tard."
+          );
+          console.error("EmailJS Error:", error);
+          setSending(false);
+        }
+      );
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setFormData((prev) => ({
       ...prev,
@@ -45,7 +65,7 @@ export default function Contact() {
             Contactez-moi
           </h1>
           <p className="text-muted-foreground text-lg">
-            N'hésitez pas à me contacter pour toute question ou opportunité
+            N&apos;hésitez pas à me contacter pour toute question ou opportunité
           </p>
         </header>
 
@@ -55,9 +75,7 @@ export default function Contact() {
             <Card className="h-full">
               <CardHeader>
                 <CardTitle>Mes coordonnées</CardTitle>
-                <CardDescription>
-                  Plusieurs moyens de me contacter
-                </CardDescription>
+                <CardDescription>Plusieurs moyens de me contacter</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="space-y-4">
@@ -71,9 +89,7 @@ export default function Contact() {
                       <Linkedin className="h-5 w-5 text-white" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="font-semibold text-foreground">
-                        LinkedIn
-                      </h3>
+                      <h3 className="font-semibold text-foreground">LinkedIn</h3>
                       <p className="text-sm text-muted-foreground">
                         Connectez-vous avec moi
                       </p>
@@ -102,23 +118,17 @@ export default function Contact() {
                       <Phone className="h-5 w-5 text-white" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="font-semibold text-foreground">
-                        Téléphone
-                      </h3>
-                      <p className="text-sm text-muted-foreground">
-                        +687 967501
-                      </p>
+                      <h3 className="font-semibold text-foreground">Téléphone</h3>
+                      <p className="text-sm text-muted-foreground">+687 967501</p>
                     </div>
                   </div>
                 </div>
 
                 <div className="border-t pt-4">
-                  <h4 className="font-semibold text-foreground mb-2">
-                    Disponibilité
-                  </h4>
+                  <h4 className="font-semibold text-foreground mb-2">Disponibilité</h4>
                   <p className="text-sm text-muted-foreground">
                     Je réponds généralement aux messages dans les 24-48 heures.
-                    N'hésitez pas à me contacter pour discuter d'opportunités
+                    N&apos;hésitez pas à me contacter pour discuter d&apos;opportunités
                     professionnelles ou de collaborations.
                   </p>
                 </div>
@@ -131,9 +141,7 @@ export default function Contact() {
             <Card className="h-full">
               <CardHeader>
                 <CardTitle>Formulaire de contact</CardTitle>
-                <CardDescription>
-                  Envoyez-moi un message directement
-                </CardDescription>
+                <CardDescription>Envoyez-moi un message directement</CardDescription>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -146,6 +154,7 @@ export default function Contact() {
                       onChange={handleChange}
                       placeholder="Votre nom"
                       required
+                      disabled={sending}
                     />
                   </div>
 
@@ -159,6 +168,7 @@ export default function Contact() {
                       onChange={handleChange}
                       placeholder="votre.email@exemple.com"
                       required
+                      disabled={sending}
                     />
                   </div>
 
@@ -172,20 +182,20 @@ export default function Contact() {
                       placeholder="Votre message..."
                       rows={6}
                       required
+                      disabled={sending}
                     />
                   </div>
 
-                  <Button type="submit" className="w-full group">
+                  <Button type="submit" className="w-full group" disabled={sending}>
                     <Send className="h-4 w-4 mr-2 group-hover:translate-x-1 transition-transform" />
-                    Envoyer le message
+                    {sending ? "Envoi en cours..." : "Envoyer le message"}
                   </Button>
                 </form>
 
                 <div className="mt-4 p-3 bg-muted/50 rounded-lg">
                   <p className="text-xs text-muted-foreground">
-                    * Champs obligatoires. Vos données personnelles sont
-                    traitées de manière confidentielle et ne seront pas
-                    partagées avec des tiers.
+                    * Champs obligatoires. Vos données personnelles sont traitées de
+                    manière confidentielle et ne seront pas partagées avec des tiers.
                   </p>
                 </div>
               </CardContent>
@@ -198,14 +208,12 @@ export default function Contact() {
           <Card className="border-primary/20 bg-gradient-to-r from-primary/5 to-accent/5">
             <CardContent className="pt-6">
               <div className="text-center">
-                <h3 className="font-semibold text-foreground mb-4">
-                  Contact rapide
-                </h3>
+                <h3 className="font-semibold text-foreground mb-4">Contact rapide</h3>
                 <div className="flex flex-wrap justify-center gap-4">
                   <Button asChild variant="outline">
                     <a href="mailto:dylangiovannipolutele@gmail.com">
                       <Mail className="h-4 w-4 mr-2" />
-                      M'écrire
+                      M&apos;écrire
                     </a>
                   </Button>
                   <Button asChild variant="outline">
