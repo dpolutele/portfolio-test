@@ -19,78 +19,114 @@ function TypingEffect() {
   const dynamicWords = [
     "Technicien",
     "Ingénieur",
-    "Administrateur Systèmes et Réseaux",
+    "Administrateur Systèmes",
+    "Administrateur Réseaux",
   ];
 
+  const dynamicPrefix = "Futur ";
+
   const [displayedText, setDisplayedText] = useState("");
-  const [phase, setPhase] = useState<"fixed1" | "fixed2" | "dynamic">("fixed1");
   const [charIndex, setCharIndex] = useState(0);
   const [wordIndex, setWordIndex] = useState(0);
-  const [deleting, setDeleting] = useState(false);
+  const [phase, setPhase] = useState<"typing" | "pause" | "deleting">("typing");
+  const [isDynamic, setIsDynamic] = useState(false);
+  const [subPhase, setSubPhase] = useState<"prefix" | "word">("prefix");
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
 
-    if (phase === "fixed1") {
-      if (charIndex <= fixedTexts[0].length) {
-        timeout = setTimeout(() => {
-          setDisplayedText(fixedTexts[0].slice(0, charIndex));
-          setCharIndex(charIndex + 1);
-        }, 100);
-      } else {
-        timeout = setTimeout(() => {
-          setPhase("fixed2");
-          setCharIndex(0);
-        }, 1000);
-      }
-    } else if (phase === "fixed2") {
-      if (charIndex <= fixedTexts[1].length) {
-        timeout = setTimeout(() => {
-          setDisplayedText(fixedTexts[1].slice(0, charIndex));
-          setCharIndex(charIndex + 1);
-        }, 100);
-      } else {
-        timeout = setTimeout(() => {
-          setPhase("dynamic");
-          setCharIndex(0);
-          setDeleting(false);
-          setWordIndex(0);
-        }, 1500);
-      }
-    } else if (phase === "dynamic") {
-      const baseText = "Futur ";
-      const currentWord = dynamicWords[wordIndex];
+    const isFixed = wordIndex < fixedTexts.length;
+    const totalWords = fixedTexts.length + dynamicWords.length;
+    const currentDynamicWord = dynamicWords[wordIndex - fixedTexts.length];
 
-      if (!deleting) {
-        if (charIndex <= currentWord.length) {
+    if (isFixed) {
+      const currentText = fixedTexts[wordIndex];
+      if (phase === "typing") {
+        if (charIndex <= currentText.length) {
           timeout = setTimeout(() => {
-            setDisplayedText(baseText + currentWord.slice(0, charIndex));
+            setDisplayedText(currentText.slice(0, charIndex));
             setCharIndex(charIndex + 1);
-          }, 150);
-        } else {
-          timeout = setTimeout(() => setDeleting(true), 2000);
-        }
-      } else {
-        if (charIndex >= 0) {
-          timeout = setTimeout(() => {
-            setDisplayedText(baseText + currentWord.slice(0, charIndex));
-            setCharIndex(charIndex - 1);
           }, 100);
         } else {
+          timeout = setTimeout(() => setPhase("deleting"), 1200);
+        }
+      } else if (phase === "deleting") {
+        if (charIndex >= 0) {
           timeout = setTimeout(() => {
-            setDeleting(false);
-            setWordIndex((wordIndex + 1) % dynamicWords.length);
+            setDisplayedText(currentText.slice(0, charIndex));
+            setCharIndex(charIndex - 1);
+          }, 50);
+        } else {
+          setWordIndex(wordIndex + 1);
+          setCharIndex(0);
+          setPhase("typing");
+        }
+      }
+    } else {
+      setIsDynamic(true);
+      if (phase === "typing") {
+        if (subPhase === "prefix") {
+          if (charIndex <= dynamicPrefix.length) {
+            timeout = setTimeout(() => {
+              setDisplayedText(dynamicPrefix.slice(0, charIndex));
+              setCharIndex(charIndex + 1);
+            }, 150); // <-- ralentit ici (au lieu de 100)
+          } else {
+            setSubPhase("word");
             setCharIndex(0);
-          }, 500);
+          }
+        } else if (subPhase === "word") {
+          if (charIndex <= currentDynamicWord.length) {
+            timeout = setTimeout(() => {
+              setDisplayedText(dynamicPrefix + currentDynamicWord.slice(0, charIndex));
+              setCharIndex(charIndex + 1);
+            }, 150); // <-- ralentit ici aussi
+          } else {
+            timeout = setTimeout(() => setPhase("deleting"), 1200);
+          }
+        }
+      } else if (phase === "deleting") {
+        const fullWord = dynamicPrefix + currentDynamicWord;
+        if (charIndex > dynamicPrefix.length) {
+          timeout = setTimeout(() => {
+            setDisplayedText(fullWord.slice(0, charIndex - 1));
+            setCharIndex(charIndex - 1);
+          }, 80); // <-- ralentit ici (au lieu de 50)
+        } else if (wordIndex - fixedTexts.length === dynamicWords.length - 1) {
+          // Supprimer "Futur " uniquement à la toute fin
+          timeout = setTimeout(() => {
+            setDisplayedText(dynamicPrefix.slice(0, charIndex - 1));
+            setCharIndex(charIndex - 1);
+          }, 80); // <-- ralentit ici aussi
+
+          if (charIndex === 1) {
+            setTimeout(() => {
+              setDisplayedText("");
+              setCharIndex(0);
+              setWordIndex(0);
+              setPhase("typing");
+              setSubPhase("prefix");
+              setIsDynamic(false);
+            }, 50);
+          }
+        } else {
+          // Passage au mot suivant
+          setPhase("typing");
+          setSubPhase("word");
+          setWordIndex(wordIndex + 1);
+          setCharIndex(dynamicPrefix.length);
         }
       }
     }
 
     return () => clearTimeout(timeout);
-  }, [charIndex, deleting, phase, wordIndex]);
+  }, [charIndex, phase, subPhase, wordIndex]);
 
   return (
-    <span className="font-bold text-4xl md:text-6xl border-r-2 border-foreground animate-blink-caret">
+    <span
+      className="font-bold text-4xl md:text-6xl border-r-2 border-foreground animate-blink-caret"
+      style={{ whiteSpace: "nowrap" }}
+    >
       {displayedText}
     </span>
   );
@@ -111,15 +147,11 @@ export default function Home() {
             professionnelle. Bonne visite !
           </p>
 
-          {/* Profile Image */}
           <div className="mt-8 flex justify-center">
             <div className="w-48 h-48 rounded-full bg-gradient-to-br from-primary to-accent overflow-hidden border-4 border-background shadow-xl">
               <img
                 src={`${import.meta.env.BASE_URL}profile.jpg`}
-                srcSet={`
-                  ${import.meta.env.BASE_URL}profile.jpg 1x,
-                  ${import.meta.env.BASE_URL}profile.jpg 2x
-                `}
+                srcSet={` ${import.meta.env.BASE_URL}profile.jpg 1x, ${import.meta.env.BASE_URL}profile.jpg 2x`}
                 alt="Photo de profil Dylan POLUTELE"
                 className="w-full h-full object-cover"
                 onError={(e) => {
@@ -222,15 +254,13 @@ export default function Home() {
             </Card>
           </Link>
 
-          <Link to="/parcours">
+          <Link to="/contact">
             <Card className="h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer group">
               <CardHeader>
                 <CardTitle className="group-hover:text-primary transition-colors">
-                  Mon parcours
+                  Contact
                 </CardTitle>
-                <CardDescription>
-                  Mon expérience professionnelle
-                </CardDescription>
+                <CardDescription>Entrer en contact avec moi</CardDescription>
               </CardHeader>
             </Card>
           </Link>
