@@ -11,13 +11,11 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 function TypingEffect() {
-  // Étapes fixes
   const fixedTexts = [
     "Bienvenue sur mon Portfolio",
     "Je suis étudiant en informatique",
   ];
 
-  // Mots dynamiques à faire défiler après "Futur "
   const dynamicWords = [
     "Technicien",
     "Ingénieur",
@@ -64,7 +62,6 @@ function TypingEffect() {
       const currentWord = dynamicWords[wordIndex];
 
       if (!deleting) {
-        // Tape le mot dynamique
         if (charIndex <= currentWord.length) {
           timeout = setTimeout(() => {
             setDisplayedText(baseText + currentWord.slice(0, charIndex));
@@ -74,7 +71,6 @@ function TypingEffect() {
           timeout = setTimeout(() => setDeleting(true), 2000);
         }
       } else {
-        // Efface le mot dynamique
         if (charIndex >= 0) {
           timeout = setTimeout(() => {
             setDisplayedText(baseText + currentWord.slice(0, charIndex));
@@ -120,6 +116,10 @@ export default function Home() {
             <div className="w-48 h-48 rounded-full bg-gradient-to-br from-primary to-accent overflow-hidden border-4 border-background shadow-xl">
               <img
                 src={`${import.meta.env.BASE_URL}profile.jpg`}
+                srcSet={`
+                  ${import.meta.env.BASE_URL}profile.jpg 1x,
+                  ${import.meta.env.BASE_URL}profile.jpg 2x
+                `}
                 alt="Photo de profil Dylan POLUTELE"
                 className="w-full h-full object-cover"
                 onError={(e) => {
