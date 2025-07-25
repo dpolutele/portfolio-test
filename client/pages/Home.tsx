@@ -8,6 +8,97 @@ import {
 import { Button } from "@/components/ui/button";
 import { Mail, Phone, Github, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+
+function TypingEffect() {
+  // Étapes fixes
+  const fixedTexts = [
+    "Bienvenue sur mon Portfolio",
+    "Je suis étudiant en informatique",
+  ];
+
+  // Mots dynamiques à faire défiler après "Futur "
+  const dynamicWords = [
+    "Technicien",
+    "Ingénieur",
+    "Administrateur Systèmes et Réseaux",
+  ];
+
+  const [displayedText, setDisplayedText] = useState("");
+  const [phase, setPhase] = useState<"fixed1" | "fixed2" | "dynamic">("fixed1");
+  const [charIndex, setCharIndex] = useState(0);
+  const [wordIndex, setWordIndex] = useState(0);
+  const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+
+    if (phase === "fixed1") {
+      if (charIndex <= fixedTexts[0].length) {
+        timeout = setTimeout(() => {
+          setDisplayedText(fixedTexts[0].slice(0, charIndex));
+          setCharIndex(charIndex + 1);
+        }, 100);
+      } else {
+        timeout = setTimeout(() => {
+          setPhase("fixed2");
+          setCharIndex(0);
+        }, 1000);
+      }
+    } else if (phase === "fixed2") {
+      if (charIndex <= fixedTexts[1].length) {
+        timeout = setTimeout(() => {
+          setDisplayedText(fixedTexts[1].slice(0, charIndex));
+          setCharIndex(charIndex + 1);
+        }, 100);
+      } else {
+        timeout = setTimeout(() => {
+          setPhase("dynamic");
+          setCharIndex(0);
+          setDeleting(false);
+          setWordIndex(0);
+        }, 1500);
+      }
+    } else if (phase === "dynamic") {
+      const baseText = "Futur ";
+      const currentWord = dynamicWords[wordIndex];
+
+      if (!deleting) {
+        // Tape le mot dynamique
+        if (charIndex <= currentWord.length) {
+          timeout = setTimeout(() => {
+            setDisplayedText(baseText + currentWord.slice(0, charIndex));
+            setCharIndex(charIndex + 1);
+          }, 150);
+        } else {
+          timeout = setTimeout(() => setDeleting(true), 2000);
+        }
+      } else {
+        // Efface le mot dynamique
+        if (charIndex >= 0) {
+          timeout = setTimeout(() => {
+            setDisplayedText(baseText + currentWord.slice(0, charIndex));
+            setCharIndex(charIndex - 1);
+          }, 100);
+        } else {
+          timeout = setTimeout(() => {
+            setDeleting(false);
+            setWordIndex((wordIndex + 1) % dynamicWords.length);
+            setCharIndex(0);
+          }, 500);
+        }
+      }
+    }
+
+    return () => clearTimeout(timeout);
+  }, [charIndex, deleting, phase, wordIndex]);
+
+  return (
+    <span className="font-bold text-4xl md:text-6xl border-r-2 border-foreground animate-blink-caret">
+      {displayedText}
+    </span>
+  );
+}
 
 export default function Home() {
   return (
@@ -15,8 +106,8 @@ export default function Home() {
       <div className="max-w-4xl mx-auto p-6 space-y-8">
         {/* Hero Section */}
         <section className="text-center py-12 animate-fade-in">
-          <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
-            Bienvenue sur mon Portfolio
+          <h1 className="mb-6">
+            <TypingEffect />
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             Bonjour l'ami(e), bienvenue sur mon portfolio. Tu trouveras sur ce

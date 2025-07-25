@@ -20,8 +20,8 @@ const ThemeSwitcher = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const themes = [
-    { name: 'default', label: 'Classique' },
-    { name: 'dark', label: 'Sombre' },
+    { name: 'default', label: 'Classic' },
+    { name: 'dark', label: 'Dark' },
   ];
 
   useEffect(() => {
